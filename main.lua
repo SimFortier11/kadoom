@@ -1,59 +1,12 @@
 function love.load()
   love.window.setTitle('KADOOM !')
-  sprites = {}
-  sprites.player = love.graphics.newImage('sprites/player.png')
-  sprites.fireBolt = love.graphics.newImage('sprites/bullet.png')
-  sprites.zombie = love.graphics.newImage('sprites/zombie.png')
-  sprites.background = love.graphics.newImage('sprites/background.png')
-
-  player = {}
-  player.x = love.graphics.getWidth() / 2
-  player.y = love.graphics.getHeight() / 2
-  player.centerX = sprites.player:getWidth() / 2
-  player.centerY = sprites.player:getHeight() / 2
-  player.speed = 360
+  require('sprites/sprites')
+  require('player')
+  require('assets/soundFX')
+  require('assets/UI')
 
   zombies = {}
   fireBolts = {}
-
-  textProps = {}
-  textProps.font = love.graphics.newFont('font/BEARPAW_.ttf', 50)
-  textProps.color = {1, 1, 1}
-
-  soundFX = {}
-  soundFX.fireBolt = love.audio.newSource('sounds/wjl_fireball.flac', 'static')
-  soundFX.splat = love.audio.newSource('sounds/slykmrbyches_splattt.mp3', 'static')
-  soundFX.fireBolt:setVolume(0.4)
-  soundFX.splat:setVolume(0.4)
-
-  scoreProps = {}
-  scoreProps.title = 'Zombie Slain: '
-  scoreProps.x = 10
-  scoreProps.y = 10
-
-
-  timerProps = {}
-  timerProps.title = 'Time: '
-  timerProps.x = love.graphics.getWidth() - 225
-
-  mainMenuProps = {}
-  mainMenuProps.text = 'Click Anywere to Start !'
-  mainMenuProps.x = 0
-  mainMenuProps.y = love.graphics.getHeight() / 2
-  mainMenuProps.limit = love.graphics.getWidth()
-
-  titleProps = {}
-  titleProps.text = 'KADOOM'
-  titleProps.font = love.graphics.newFont('font/BEARPAW_.ttf', 150)
-  titleProps.x = 0
-  titleProps.y = mainMenuProps.y - 150
-  titleProps.limit = love.graphics.getWidth()
-
-  endMenuProps = {}
-  endMenuProps.title = 'YOU ARE DEAD !'
-  endMenuProps.color = {0.75, 0, 0}
-  endMenuProps.text = 'Zombie Slain:'
-  endMenuProps.subText = 'Click Anywere to Restart !'
 
   gameState = 1
   maxTime = 2
