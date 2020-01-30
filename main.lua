@@ -7,8 +7,8 @@ function love.load()
   sprites.background = love.graphics.newImage('sprites/background.png')
 
   player = {}
-  player.x = 200
-  player.y = 200
+  player.x = love.graphics.getWidth() / 2
+  player.y = love.graphics.getHeight() / 2
   player.centerX = sprites.player:getWidth() / 2
   player.centerY = sprites.player:getHeight() / 2
   player.speed = 360
@@ -23,10 +23,13 @@ function love.load()
   soundFX = {}
   soundFX.fireBolt = love.audio.newSource('sounds/wjl_fireball.flac', 'static')
   soundFX.splat = love.audio.newSource('sounds/slykmrbyches_splattt.mp3', 'static')
+  soundFX.fireBolt:setVolume(0.4)
+  soundFX.splat:setVolume(0.4)
 
   scoreProps = {}
   scoreProps.title = 'Zombie Slain: '
   scoreProps.x = 10
+  scoreProps.y = 10
 
 
   timerProps = {}
@@ -131,7 +134,7 @@ function love.draw()
   if gameState == 2 then
     love.graphics.draw(sprites.background, 0, 0)
     love.graphics.draw(sprites.player, player.x, player.y, playerMouseAngle(), nil, nil, player.centerX, player.centerY)
-    love.graphics.print(scoreProps.title .. score, scoreProps.x)
+    love.graphics.print(scoreProps.title .. score, scoreProps.x, scoreProps.y)
 
     for i, z in ipairs(zombies) do
       love.graphics.draw(sprites.zombie, z.x, z.y, zombiePlayerAngle(z), nil, nil, z.centerX, z.centerY)
@@ -216,19 +219,6 @@ function raiseZombie()
 
 end
 
--- function love.keypressed(key, scancode, isrepeat)
---   if button == 1 then
---     if gameState == 1 then
---       gameState = 2
---     end
---     if gameState == 3 then
---       score = 0
---       maxTime = 2
---       gameState = 2
---     end
---   end
--- end
-
 function love.mousepressed(x, y, button, isTouch)
   if button == 1 then
     if gameState == 1 then
@@ -238,9 +228,10 @@ function love.mousepressed(x, y, button, isTouch)
       summonFireBolt()
     end
     if gameState == 3 then
+      gameState = 2
       score = 0
       maxTime = 2
-      gameState = 2
+      timer = maxTime
     end
   end
 end
